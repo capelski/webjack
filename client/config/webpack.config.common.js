@@ -67,8 +67,8 @@ const webpackConfig = {
         new HtmlPlugin({ template: 'index.html', chunksSortMode: 'dependency' }),
         new CopyWebpackPlugin([
             {
-              from: path.resolve(__dirname, '..', 'static'),
-              to: path.resolve(__dirname, '..', '..', 'dist', 'public', 'static')
+              from: path.resolve(__dirname, '..', 'assets'),
+              to: path.resolve(__dirname, '..', '..', 'dist', 'public')
             }
         ])
     ]

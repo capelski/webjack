@@ -58,8 +58,6 @@
 <script lang="ts">
     import { RegisterOnline, RemoteTable, BasicStrategyTable, LocalTable, Loader } from 'webjack-ui-components';
     import { GameModes } from './utils/game-modes';
-    import { stallPromise } from './utils/shared';
-    import { get } from './utils/http';
 
     export default {
         components: {
@@ -71,74 +69,92 @@
         },
         data() {
             return {
-                GameModes,
-                gameMode: undefined,
-                loading: false,
-                onlineTableId: undefined,
-                onlineUserId: undefined,
-                registeringPlayerOnline: false
+                GameModes
             };
         },
+        created() {
+            this.$store.dispatch('retrievePlayerStatus');
+        },
         computed: {
+            gameMode() {
+                return this.$store.state.gameMode;
+            },
+            loading() {
+                return this.$store.state.loading.value;
+            },
+            onlineTableId() {
+                return this.$store.state.onlineTableId;
+            },
+            onlineUserId() {
+                return this.$store.state.onlineUserId;
+            },
+            registeringPlayerOnline() {
+                return this.$store.state.registeringPlayerOnline.value;
+            },
             serverUrl() {
                 return process.env.baseApiUrl;
             }
         },
-        created() {
-            this.loading = true;
-            return stallPromise(get(
-                this.serverUrl + '/is-player-registered',
-                null,
-                {},
-                'Error checking whether the player is already registered'))
-            .then(data => {
-                if (data.playerId) {
-                    this.onlineUserId = data.playerId;
-
-                    if (data.tableId) {
-                        this.onlineTableId = data.tableId;
-                        this.gameMode = GameModes.remote;
-                    }
-                }
-                this.loading = false;
-            });
-        },
         methods: {
             cancelRegister() {
-                this.registeringPlayerOnline = false;
+                this.$store.dispatch('cancelRegister');
             },
-            
-            exitTable() {
-                this.gameMode = undefined;
+            exitTable()  {
+                this.$store.dispatch('exitTable');
             },
             joinBasicStrategyTable() {
-                this.gameMode = GameModes.basicStrategy;
+                this.$store.dispatch('joinBasicStrategyTable');
             },
             joinOfflineTable() {
-                this.gameMode = GameModes.local;
+                this.$store.dispatch('joinOfflineTable');
             },
             joinOnlineTable() {
-                if (!this.onlineUserId) {
-                    this.registeringPlayerOnline = true;
-                }
-                else {
-                    this.gameMode = GameModes.remote;
-                }
+                this.$store.dispatch('joinOnlineTable');
             },
             registerPlayer(playerName: string) {
-                this.loading = true;
-                return stallPromise(get(
-                    this.serverUrl + '/register-player',
-                    { name: playerName },
-                    {},
-                    'Error registering the player'))
-                .then(data => {
-                    this.onlineUserId = data.playerId;
-                    this.registeringPlayerOnline = false;
-                    this.gameMode = GameModes.remote;
-                    this.loading = false;
-                });
+                this.$store.dispatch('registerPlayer', playerName);
             }
         }
     }
 </script>
+
+<style>
+    @font-face {
+        font-family: 'Montserrat';
+        src: url('/static/fonts/Montserrat-Regular.ttf?$modena=webjack');
+    }
+
+    html, body {
+        height: 100%;
+        background-color: #088446;
+        color: #EEDC82;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .full-height {
+        height: 100%;
+    }
+
+    .centered {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .top-space-20 {
+        margin-top: 20px;
+    }
+
+    .main-menu .title {
+        font-size: 75px;
+    }
+
+    .main-menu .subtitle {
+        font-size: 20px;
+    }
+
+    .main-menu .btn {
+        margin-top: 10px;
+    }
+</style>
