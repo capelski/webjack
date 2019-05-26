@@ -1,4 +1,4 @@
 module.exports = {
     NODE_ENV: 'production',
-    baseApiUrl: '/api'
+    baseApiUrl: '/api/{endpoint}?$modena=webjack'
 };

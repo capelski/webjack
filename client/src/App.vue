@@ -1,8 +1,8 @@
 <template>
     <div id="app" class="full-height">
-        <Loader v-if="loading" />
-        <div class="full-height" v-if="!loading">
-            <div class="main-menu centered" v-if="!gameMode && !registeringPlayerOnline">
+        <div class="full-height">
+            <!-- TODO Create a Home component -->
+            <div class="main-menu full-height centered" v-if="!gameMode && !remoteLoading">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 text-center">
@@ -31,24 +31,20 @@
                     </div>
                 </div>
             </div>
-            <RegisterOnline
-                v-if="!gameMode && registeringPlayerOnline"
-                :registerPlayerHandler="registerPlayer"
-                :cancelRegisterHandler="cancelRegister"
+            <BasicStrategyTable
+                :renderCondition="gameMode === GameModes.basicStrategy"
+                v-on:TableExited="exitTable"
             />
             <LocalTable
-                v-if="gameMode === GameModes.local"
+                :renderCondition="gameMode === GameModes.local"
                 v-on:TableExited="exitTable"
             />
             <RemoteTable
-                v-if="gameMode === GameModes.remote"
-                v-on:TableExited="exitTable"
                 :serverUrl="serverUrl"
-                :tableId="onlineTableId"
-                :userId="onlineUserId"
-            />
-            <BasicStrategyTable
-                v-if="gameMode === GameModes.basicStrategy"
+                :renderCondition="gameMode === GameModes.remote"
+                v-on:LoadingStarted="setLoading"
+                v-on:LoadingFinished="unsetLoading"
+                v-on:TableJoined="joinOnlineTable"
                 v-on:TableExited="exitTable"
             />
         </div>
@@ -56,49 +52,30 @@
 </template>
 
 <script lang="ts">
-    import { RegisterOnline, RemoteTable, BasicStrategyTable, LocalTable, Loader } from 'webjack-ui-components';
-    import { GameModes } from './utils/game-modes';
+    import { RemoteTable, BasicStrategyTable, LocalTable } from 'webjack-ui-components';
+    import { GameModes } from './game-modes';
 
     export default {
         components: {
-            RegisterOnline,
-            RemoteTable,
             BasicStrategyTable,
             LocalTable,
-            Loader
+            RemoteTable
         },
         data() {
             return {
-                GameModes
+                GameModes,
+                remoteLoading: true
             };
-        },
-        created() {
-            this.$store.dispatch('retrievePlayerStatus');
         },
         computed: {
             gameMode() {
                 return this.$store.state.gameMode;
             },
-            loading() {
-                return this.$store.state.loading.value;
-            },
-            onlineTableId() {
-                return this.$store.state.onlineTableId;
-            },
-            onlineUserId() {
-                return this.$store.state.onlineUserId;
-            },
-            registeringPlayerOnline() {
-                return this.$store.state.registeringPlayerOnline.value;
-            },
             serverUrl() {
-                return process.env.baseApiUrl + '/{endpoint}?$modena=webjack';
+                return process.env.baseApiUrl;
             }
         },
         methods: {
-            cancelRegister() {
-                this.$store.dispatch('cancelRegister');
-            },
             exitTable()  {
                 this.$store.dispatch('exitTable');
             },
@@ -111,8 +88,11 @@
             joinOnlineTable() {
                 this.$store.dispatch('joinOnlineTable');
             },
-            registerPlayer(playerName: string) {
-                this.$store.dispatch('registerPlayer', playerName);
+            setLoading() {
+                this.remoteLoading = true;
+            },
+            unsetLoading() {
+                this.remoteLoading = false;
             }
         }
     }
@@ -136,7 +116,6 @@
     }
 
     .centered {
-        height: 100%;
         display: flex;
         justify-content: center;
         flex-direction: column;
