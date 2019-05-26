@@ -14,6 +14,7 @@ export const get = (url: string, parameters?: any, defaultValue?: any, errorMess
     };
 
     parameters = parameters || {};
+    parameters.$modena = 'webjack';
 
     url += '?';
     for (var key in parameters) {
