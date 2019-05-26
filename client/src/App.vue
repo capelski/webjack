@@ -92,7 +92,7 @@
                 return this.$store.state.registeringPlayerOnline.value;
             },
             serverUrl() {
-                return process.env.baseApiUrl;
+                return process.env.baseApiUrl + '/{endpoint}?$modena=webjack';
             }
         },
         methods: {

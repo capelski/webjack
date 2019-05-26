@@ -58,7 +58,7 @@ export function createStore() {
                 context.commit('loading', true);
                 return stallPromise(get(
                     baseApiUrl + '/register-player',
-                    { name: playerName },
+                    { name: playerName, $modena: 'webjack' },
                     {},
                     'Error registering the player'))
                 .then(data => {
@@ -72,7 +72,7 @@ export function createStore() {
                 context.commit('loading', true);
                 return stallPromise(get(
                     baseApiUrl + '/is-player-registered',
-                    null,
+                    { $modena: 'webjack' },
                     {},
                     'Error checking whether the player is already registered'))
                 .then(data => {
