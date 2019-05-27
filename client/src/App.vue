@@ -66,7 +66,7 @@
 <style>
     @font-face {
         font-family: 'Montserrat';
-        src: url('/static/fonts/Montserrat-Regular.ttf?$modena=webjack');
+        src: url('/fonts/Montserrat-Regular.ttf?$modena=webjack');
     }
 
     html, body {
