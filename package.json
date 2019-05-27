@@ -26,8 +26,8 @@
     "express-session": "^1.16.1",
     "vue": "^2.5.2",
     "vuex": "^3.0.1",
-    "webjack-ui-components": "0.0.8",
-    "webjack-web-api": "^0.0.5"
+    "webjack-ui-components": "0.0.9",
+    "webjack-web-api": "0.0.7"
   },
   "devDependencies": {
     "@babel/core": "~7.2",
