@@ -20,15 +20,15 @@
     "build:server": "tsc -p server/tsconfig.json",
     "start": "node dist/index.js",
     "start:client": "cd client && cross-env NODE_ENV=development webpack-dev-server --progress",
-    "symlinks": "npm link webjack-web-api && npm link webjack-ui-components"
+    "symlinks": "npm link webjack-core && npm link webjack-ui-components && npm link webjack-web-api"
   },
   "dependencies": {
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "vue": "^2.5.2",
     "vuex": "^3.0.1",
-    "webjack-ui-components": "^0.0.10",
-    "webjack-web-api": "^0.0.8"
+    "webjack-ui-components": "^0.0.11",
+    "webjack-web-api": "^0.0.9"
   },
   "devDependencies": {
     "@babel/core": "~7.2",
