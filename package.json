@@ -15,11 +15,12 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "start:client": "cd client && cross-env NODE_ENV=development webpack-dev-server --progress",
     "build": "rm -rf dist && npm run build:server && npm run build:client",
     "build:client": "cd client && cross-env NODE_ENV=production webpack",
-    "build:server": "tsc -p server/tsconfig.json"
+    "build:server": "tsc -p server/tsconfig.json",
+    "start": "node dist/index.js",
+    "start:client": "cd client && cross-env NODE_ENV=development webpack-dev-server --progress",
+    "symlinks": "npm link webjack-web-api && npm link webjack-ui-components"
   },
   "dependencies": {
     "express": "^4.16.4",
