@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction, RequestHandler }  from 'express';
+import express from 'express';
 import session from 'express-session';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -6,13 +6,6 @@ import { exposeWebjackRoutes, setGameParameters, useDevelopmentCardSet } from 'w
 
 const defaultConfig = {
     SESSION_SECRET: 'to be replaced with environment variables',
-};
-
-const corsMiddleware: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
-	res.header('Access-Control-Allow-Origin', 'http://localhost:8000');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	next();
 };
 
 const getExpressApp = (environmentConfig: any = {}) => {
@@ -25,8 +18,7 @@ const getExpressApp = (environmentConfig: any = {}) => {
         secret: environmentConfig.SESSION_SECRET || defaultConfig.SESSION_SECRET,
         resave: false,
         saveUninitialized: true
-    }) as RequestHandler);
-    app.use(corsMiddleware);
+    }));
     exposeWebjackRoutes(app, '/api');
 
     const gameParametersPath = join(__dirname, '..', 'game-parameters.json');
