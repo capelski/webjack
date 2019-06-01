@@ -2,7 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { exposeWebjackRoutes, setGameParameters, useDevelopmentCardSet } from 'webjack-web-api';
+import { exposeWebjackRoutes, setGameParameters } from 'webjack-web-api';
 
 const defaultConfig = {
     SESSION_SECRET: 'to be replaced with environment variables',
@@ -26,14 +26,6 @@ const getExpressApp = (environmentConfig: any = {}) => {
         const gameParameters = require(gameParametersPath);
         setGameParameters(gameParameters);
     }
-    
-    const developmentCardSetPath = join(__dirname, '..', 'development-card-set.json');
-	if (existsSync(developmentCardSetPath)) {
-        const developmentCardSet = require(developmentCardSetPath);
-        if (developmentCardSet.enabled) {
-            useDevelopmentCardSet(developmentCardSet.cards);
-        }
-	}
 
 	return app;
 };
