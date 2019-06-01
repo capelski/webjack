@@ -17,14 +17,14 @@ export function createStore() {
             exitTable(context: Store<State>) {
                 context.commit('gameMode', undefined);
             },
-            joinBasicStrategyTable(context: Store<State>) {
-                context.commit('gameMode', GameModes.basicStrategy);
-            },
-            joinOfflineTable(context: Store<State>) {
+            joinLocalTable(context: Store<State>) {
                 context.commit('gameMode', GameModes.local);
             },
-            joinOnlineTable(context: Store<State>) {
+            joinRemoteTable(context: Store<State>) {
                 context.commit('gameMode', GameModes.remote);
+            },
+            joinTrainingTable(context: Store<State>) {
+                context.commit('gameMode', GameModes.training);
             }
         } as any,
         mutations: {

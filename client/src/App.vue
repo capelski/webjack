@@ -1,10 +1,6 @@
 <template>
     <div id="app" class="full-height">
         <Menu v-if="!gameMode && !remoteLoading"/>
-        <BasicStrategyTable
-            :renderCondition="gameMode === GameModes.basicStrategy"
-            v-on:TableExited="exitTable"
-        />
         <LocalTable
             :renderCondition="gameMode === GameModes.local"
             v-on:TableExited="exitTable"
@@ -14,23 +10,27 @@
             :renderCondition="gameMode === GameModes.remote"
             v-on:LoadingStarted="setLoading"
             v-on:LoadingFinished="unsetLoading"
-            v-on:TableJoined="joinOnlineTable"
+            v-on:TableJoined="joinRemoteTable"
+            v-on:TableExited="exitTable"
+        />
+        <TrainingTable
+            :renderCondition="gameMode === GameModes.training"
             v-on:TableExited="exitTable"
         />
     </div>
 </template>
 
 <script lang="ts">
-    import { RemoteTable, BasicStrategyTable, LocalTable } from 'webjack-ui-components';
+    import { LocalTable, RemoteTable, TrainingTable } from 'webjack-ui-components';
     import { GameModes } from './game-modes';
     import Menu from './Menu.vue';
 
     export default {
         components: {
-            BasicStrategyTable,
             Menu,
             LocalTable,
-            RemoteTable
+            RemoteTable,
+            TrainingTable
         },
         data() {
             return {
@@ -50,8 +50,8 @@
             exitTable()  {
                 this.$store.dispatch('exitTable');
             },
-            joinOnlineTable() {
-                this.$store.dispatch('joinOnlineTable');
+            joinRemoteTable() {
+                this.$store.dispatch('joinRemoteTable');
             },
             setLoading() {
                 this.remoteLoading = true;

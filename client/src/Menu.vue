@@ -15,13 +15,13 @@
 
             <div class="row top-space-20">
                 <div class="col-xs-12 text-center">
-                    <button type="button" class="btn btn-primary" v-on:click="joinOfflineTable">
+                    <button type="button" class="btn btn-primary" v-on:click="joinLocalTable">
                         Play offline
                     </button>
-                    <button type="button" class="btn btn-success" v-on:click="joinOnlineTable">
+                    <button type="button" class="btn btn-success" v-on:click="joinRemoteTable">
                         Play online
                     </button>
-                    <button type="button" class="btn btn-warning" v-on:click="joinBasicStrategyTable">
+                    <button type="button" class="btn btn-warning" v-on:click="joinTrainingTable">
                         Practice basic strategy
                     </button>
                 </div>
@@ -34,14 +34,14 @@
     export default {
         name: 'Menu',
         methods: {
-            joinBasicStrategyTable() {
-                this.$store.dispatch('joinBasicStrategyTable');
+            joinLocalTable() {
+                this.$store.dispatch('joinLocalTable');
             },
-            joinOfflineTable() {
-                this.$store.dispatch('joinOfflineTable');
+            joinRemoteTable() {
+                this.$store.dispatch('joinRemoteTable');
             },
-            joinOnlineTable() {
-                this.$store.dispatch('joinOnlineTable');
+            joinTrainingTable() {
+                this.$store.dispatch('joinTrainingTable');
             }
         }
     }
