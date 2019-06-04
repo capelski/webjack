@@ -21,15 +21,15 @@
     "start": "node dist/index.js",
     "start:client": "cd client && cross-env NODE_ENV=development webpack-dev-server --progress",
     "symlinks": "npm link webjack-core && npm link webjack-ui-components && npm link webjack-web-api",
-    "update:webjack": "npm update webjack-ui-components webjack-web-api"
+    "update:webjack": "npm i webjack-ui-components@latest webjack-web-api@latest"
   },
   "dependencies": {
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "vue": "^2.5.2",
     "vuex": "^3.0.1",
-    "webjack-ui-components": "^0.1.2",
-    "webjack-web-api": "^0.1.2"
+    "webjack-ui-components": "^0.2.0",
+    "webjack-web-api": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "~7.2",
