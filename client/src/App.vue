@@ -1,16 +1,16 @@
 <template>
     <div id="app" class="full-height">
-        <Menu v-if="!gameMode && !remoteLoading"/>
-        <LocalTable
-            :renderCondition="gameMode === GameModes.local"
-            v-on:TableExited="exitTable"
-        />
-        <RemoteTable
+        <AjaxTable
             :serverUrl="serverUrl"
             :renderCondition="gameMode === GameModes.remote"
             v-on:LoadingStarted="setLoading"
             v-on:LoadingFinished="unsetLoading"
             v-on:TableJoined="joinRemoteTable"
+            v-on:TableExited="exitTable"
+        />
+        <Menu v-if="!gameMode && !remoteLoading"/>
+        <LocalTable
+            :renderCondition="gameMode === GameModes.local"
             v-on:TableExited="exitTable"
         />
         <TrainingTable
@@ -21,15 +21,15 @@
 </template>
 
 <script lang="ts">
-    import { LocalTable, RemoteTable, TrainingTable } from 'webjack-ui-components';
+    import { AjaxTable, LocalTable, TrainingTable } from 'webjack-ui-components';
     import { GameModes } from './game-modes';
     import Menu from './Menu.vue';
 
     export default {
         components: {
+            AjaxTable,
             Menu,
             LocalTable,
-            RemoteTable,
             TrainingTable
         },
         data() {
