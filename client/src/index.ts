@@ -10,6 +10,6 @@ Vue.config.productionTip = false;
 
 new Vue({
     el: '#app',
-    render: h => h(App),
+    render: createElement => createElement(App as any),
     store: createStore()
 });
