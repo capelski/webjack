@@ -1,46 +1,40 @@
-const cacheName = 'WEBJACK_CACHE';
-const filesToCache = [
-    '/'
-];
+const myCache = 'WEBJACK_CACHE';
 
-function handleStaticResourceRequests(requestCopy, event) {
-    event.respondWith(
-        caches.match(event.request)
-        .then((response) => {
-            if (response) {
-                return response;
-            } else {
-                return fetch(event.request).then((response) => {
-                    if (!response || response.status !== 200 || response.type !== 'basic') {
-                        return response;
-                    } else {
-                        const responseCopy = response.clone();
-                        caches.open(cacheName)
-                            .then((cache) => {
-                                return cache.put(requestCopy, responseCopy);
-                            });
-                        return response;
-                    }
-                });
-            }
-        })
-    );
-};
+self.addEventListener('install', (event) => {
+    event.waitUntil(async function() {
+        const cache = await caches.open(myCache);
+        await cache.addAll([
+            '/'
+        ]);
+    }());
+});
 
-self.addEventListener('install', function (event) {
-    event.waitUntil(
-        caches.open(cacheName)
-        .then((cache) => {
-            return cache.addAll(filesToCache);
-        })
-    );
+self.addEventListener('activate', (event) => {
+    event.waitUntil(async function() {
+        const cache = await caches.open(myCache);
+        const cacheNames = await cache.keys();
+        await Promise.all(
+            cacheNames.map(cacheName => caches.delete(cacheName))
+        );
+    }());
 });
 
 self.addEventListener('fetch', (event) => {
-    const requestCopy = event.request.clone();
-    if (event.request.method === 'GET' && event.request.url.indexOf('/api') < 0) {
-        handleStaticResourceRequests(requestCopy, event);
-    } else {
-        event.respondWith(fetch(event.request));
-    }
-}); 
+    event.respondWith(async function() {
+        const networkPromise = fetch(event.request);
+        const cachePromise = caches.open(myCache);
+
+        try {
+            const networkResponse = await networkPromise;
+            cachePromise
+                .then(cache => {
+                    cache.put(event.request, networkResponse);
+                });
+            return networkResponse.clone();
+        } catch (error) {
+            const cache = await cachePromise;
+            const cacheResponse = await cache.match(event.request);
+            return cacheResponse;
+        }
+    }());
+});
