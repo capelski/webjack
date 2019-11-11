@@ -31,5 +31,3 @@ const getExpressApp = (environmentConfig: any = {}) => {
 };
 
 export default getExpressApp;
-
-module.exports = getExpressApp;
