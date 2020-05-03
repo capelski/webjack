@@ -6,4 +6,4 @@ Seems that blackJack has been my programatic fetish since I first learned to cod
 
 ![webjack-2](https://user-images.githubusercontent.com/7153987/59192943-53d62d80-8b84-11e9-9b77-df402d091535.JPG)
 
-P.S. Wondering about the get-express-app file and the URLs $modena query parameter? Check out [modena](https://github.com/L3bowski/modena-v2) to learn how to automatically expose multiple isolated express apps on a single server
+P.S. Wondering about the get-express-app file and the URLs \$modena query parameter? Check out [modena](https://github.com/capelski/modena-v2) to learn how to automatically expose multiple isolated express apps on a single server

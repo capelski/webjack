@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@my-git:L3bowski/webjack"
+    "url": "https://github.com/capelski/webjack"
   },
   "main": "dist/index.js",
   "scripts": {
