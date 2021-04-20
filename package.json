@@ -15,9 +15,9 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && npm run build:server && npm run build:client",
-    "build:client": "cd client && cross-env NODE_ENV=production webpack",
-    "build:server": "tsc -p server/tsconfig.json",
+    "build": "npm run build:server && npm run build:client",
+    "build:client": "rm -rf docs && cd client && cross-env NODE_ENV=production webpack",
+    "build:server": "rm -rf dist && tsc -p server/tsconfig.json",
     "start": "node dist/index.js",
     "start:client": "cd client && cross-env NODE_ENV=development webpack-dev-server --progress",
     "symlinks": "npm link webjack-core && npm link webjack-ui-components && npm link webjack-web-api",

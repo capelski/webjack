@@ -18,9 +18,9 @@
                     <button type="button" class="btn btn-primary" v-on:click="joinLocalTable">
                         Play offline
                     </button>
-                    <button type="button" class="btn btn-success" v-on:click="joinRemoteTable">
+                    <!-- <button type="button" class="btn btn-success" v-on:click="joinRemoteTable">
                         Play online
-                    </button>
+                    </button> -->
                     <button type="button" class="btn btn-warning" v-on:click="joinTrainingTable">
                         Practice basic strategy
                     </button>
@@ -37,9 +37,9 @@
             joinLocalTable() {
                 this.$store.dispatch('joinLocalTable');
             },
-            joinRemoteTable() {
-                this.$store.dispatch('joinRemoteTable');
-            },
+            // joinRemoteTable() {
+            //     this.$store.dispatch('joinRemoteTable');
+            // },
             joinTrainingTable() {
                 this.$store.dispatch('joinTrainingTable');
             }

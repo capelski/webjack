@@ -14,10 +14,10 @@ const environment              = require('./env/prod.env');
 const webpackConfig = merge(commonConfig, {
     mode: 'production',
     output: {
-        path: path.resolve(__dirname, '..', '..', 'dist', 'public'),
-        publicPath: '/',
-        filename: 'js/[hash].js?$modena=webjack',
-        chunkFilename: 'js/[id].[hash].chunk.js?$modena=webjack',
+        path: path.resolve(__dirname, '..', '..', 'docs'),
+        publicPath: '/webjack',
+        filename: 'js/[hash].js',
+        chunkFilename: 'js/[id].[hash].chunk.js',
         libraryTarget: 'umd',
         library: 'webjack',
         umdNamedDefine: true
@@ -60,8 +60,9 @@ const webpackConfig = merge(commonConfig, {
     plugins: [
         new webpack.EnvironmentPlugin(environment),
         new MiniCSSExtractPlugin({
-            filename: 'css/[name].[hash].css?$modena=webjack',
-            chunkFilename: 'css/[id].[hash].css?$modena=webjack'
+            filename: 'css/[name].[hash].css',
+            publicPath: '',
+            chunkFilename: 'css/[id].[hash].css'
         }),
         new CompressionPlugin({
             filename: '[path].gz[query]',

@@ -1,14 +1,14 @@
 <template>
     <div id="app" class="full-height">
-        <AjaxTable
+        <!-- <AjaxTable
             :serverUrl="serverUrl"
             :renderCondition="gameMode === GameModes.remote"
             v-on:LoadingStarted="setLoading"
             v-on:LoadingFinished="unsetLoading"
             v-on:TableJoined="joinRemoteTable"
             v-on:TableExited="exitTable"
-        />
-        <Menu v-if="!gameMode && !remoteLoading"/>
+        /> -->
+        <Menu v-if="!gameMode/*&& !remoteLoading*/"/>
         <LocalTable
             :renderCondition="gameMode === GameModes.local"
             v-on:TableExited="exitTable"
@@ -21,13 +21,13 @@
 </template>
 
 <script lang="ts">
-    import { AjaxTable, LocalTable, TrainingTable } from 'webjack-ui-components';
+    import { /*AjaxTable,*/ LocalTable, TrainingTable } from 'webjack-ui-components';
     import { GameModes } from './game-modes';
     import Menu from './Menu.vue';
 
     export default {
         components: {
-            AjaxTable,
+            // AjaxTable,
             Menu,
             LocalTable,
             TrainingTable
@@ -35,7 +35,7 @@
         data() {
             return {
                 GameModes,
-                remoteLoading: true
+                // remoteLoading: true
             };
         },
         computed: {
@@ -50,15 +50,15 @@
             exitTable()  {
                 this.$store.dispatch('exitTable');
             },
-            joinRemoteTable() {
-                this.$store.dispatch('joinRemoteTable');
-            },
-            setLoading() {
-                this.remoteLoading = true;
-            },
-            unsetLoading() {
-                this.remoteLoading = false;
-            }
+            // joinRemoteTable() {
+            //     this.$store.dispatch('joinRemoteTable');
+            // },
+            // setLoading() {
+            //     this.remoteLoading = true;
+            // },
+            // unsetLoading() {
+            //     this.remoteLoading = false;
+            // }
         }
     }
 </script>
@@ -66,7 +66,7 @@
 <style>
     @font-face {
         font-family: 'Montserrat';
-        src: url('/fonts/Montserrat-Regular.ttf?$modena=webjack');
+        src: url('/webjack/fonts/Montserrat-Regular.ttf');
     }
 
     html, body {

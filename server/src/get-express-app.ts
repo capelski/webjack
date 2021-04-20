@@ -10,16 +10,18 @@ const defaultConfig = {
 
 const getExpressApp = (environmentConfig: any = {}) => {
     const app = express();
+
+    app.get(/^\/$/, (req, res, next) => res.redirect('/webjack'));
     
-    const assetsFolder = join(__dirname, 'public');
-    app.use(express.static(assetsFolder));
+    const assetsFolder = join(__dirname, '..', 'docs');
+    app.use('/webjack', express.static(assetsFolder));
     
-    app.use(session({
+    app.use('/webjack', session({
         secret: environmentConfig.SESSION_SECRET || defaultConfig.SESSION_SECRET,
         resave: false,
         saveUninitialized: true
     }));
-    exposeWebjackRoutes(app, '/api');
+    exposeWebjackRoutes(app, '/webjack/api');
 
     const gameParametersPath = join(__dirname, '..', 'game-parameters.json');
 	if (existsSync(gameParametersPath)) {

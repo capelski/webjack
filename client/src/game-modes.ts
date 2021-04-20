@@ -1,5 +1,5 @@
 export enum GameModes {
     local = 'local',
-    remote = 'remote',
+    // remote = 'remote',
     training = 'training'
 }

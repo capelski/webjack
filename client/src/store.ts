@@ -20,9 +20,9 @@ export function createStore() {
             joinLocalTable(context: Store<State>) {
                 context.commit('gameMode', GameModes.local);
             },
-            joinRemoteTable(context: Store<State>) {
-                context.commit('gameMode', GameModes.remote);
-            },
+            // joinRemoteTable(context: Store<State>) {
+            //     context.commit('gameMode', GameModes.remote);
+            // },
             joinTrainingTable(context: Store<State>) {
                 context.commit('gameMode', GameModes.training);
             }
